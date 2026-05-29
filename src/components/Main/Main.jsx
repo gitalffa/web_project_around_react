@@ -8,7 +8,7 @@ import lagodi from "../../images/lagodi.png";
 import valledeyosemite from "../../images/valledeyosemite.jpg";
 import latemar from "../../images/latemar.png";
 import vanois from "../../images/vanois.png";
-import lagolouise from "../../images/lagolouise.png";
+import lagolouise from "../../images/lagolouise.jpg";
 import montanascalvas from "../../images/montanascalvas.png";
 
 /* Importo los tres forms que voy a meter al popup */

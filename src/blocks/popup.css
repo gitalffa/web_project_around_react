@@ -29,10 +29,11 @@
   background-color: transparent;
   box-shadow: none;
   padding: 0;
-  width: auto; /* anula el width: 430px de la regla anterior */
+  /* Caja FIJA, no depende de la imagen */
+  width: 80vh;
+  height: 80vh;
   max-width: 90vw;
-  max-height: 90vh;
-  display: flex; /* para centrar la imagen */
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -148,7 +149,10 @@
 }
 
 .popup__content_content_image img {
-  max-width: 90vw;
-  max-height: 80vh;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
 }

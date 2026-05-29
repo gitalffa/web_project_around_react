@@ -161,7 +161,7 @@ function Main() {
       <section className="gallery"></section> */}
       <ul className="gallery">
         {cards.map((card) => (
-          <Card key={card._id} card={card} />
+          <Card key={card._id} card={card} handleOpenPopup={handleOpenPopup} />
         ))}
       </ul>
       {/* popup && (...) es un truco de JavaScript que se llama "evaluación de

@@ -29,7 +29,12 @@
   background-color: transparent;
   box-shadow: none;
   padding: 0;
-  max-width: 80vw;
+  width: auto; /* anula el width: 430px de la regla anterior */
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex; /* para centrar la imagen */
+  justify-content: center;
+  align-items: center;
 }
 
 /* === Botón X de cerrar === */
@@ -140,4 +145,10 @@
     height: 46px;
     font-size: 14px;
   }
+}
+
+.popup__content_content_image img {
+  max-width: 90vw;
+  max-height: 80vh;
+  display: block;
 }

@@ -4,20 +4,72 @@ import avatar from "../../images/Avatar.png";
 import editIcon from "../../images/editar.png";
 import addIcon from "../../images/add-image.png";
 
+import lagodi from "../../images/lagodi.png";
+import valledeyosemite from "../../images/valledeyosemite.jpg";
+import latemar from "../../images/latemar.png";
+import vanois from "../../images/vanois.png";
+import lagolouise from "../../images/lagolouise.png";
+import montanascalvas from "../../images/montanascalvas.png";
+
 /* Importo los tres forms que voy a meter al popup */
 import EditAvatar from "./components/form/EditAvatar/EditAvatar";
 import EditProfile from "./components/form/EditProfile/EditProfile";
 import NewCard from "./components/form/NewCard/NewCard";
 
+/* importo el componente card para las imagenes */
+import Card from "./components/Card/Card";
+
 /* Importo el Popup generico */
 import Popup from "./components/Popup/Popup";
+
+/* el array de Cards */
+const cards = [
+  {
+    isLiked: false,
+    _id: "card-001",
+    name: "Lago di",
+    link: lagodi,
+  },
+  {
+    isLiked: false,
+    _id: "card-002",
+    name: "Valle de Yosemite",
+    link: valledeyosemite,
+  },
+  {
+    isLiked: false,
+    _id: "card-003",
+    name: "Latemar",
+    link: latemar,
+  },
+  {
+    isLiked: false,
+    _id: "card-004",
+    name: "Vanoise",
+    link: vanois,
+  },
+  {
+    isLiked: false,
+    _id: "card-005",
+    name: "Lago Louise",
+    link: lagolouise,
+  },
+  {
+    isLiked: false,
+    _id: "card-006",
+    name: "Montañas Calvas",
+    link: montanascalvas,
+  },
+];
+
+console.log(cards);
 
 function Main() {
   /* creo el useState que usare para los dar el estado a la funcion que manipula el estado de los popups */
   const [popup, setPopup] = useState(null);
 
   /* los tres objetos que tendran los datos del formularion que mandaremos al popup y su titulo */
-  const newCardPopup = { titile: "Nuevo lugar", children: <NewCard /> };
+  const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const editProfilePopup = {
     title: "Editar perfil",
     children: <EditProfile />,
@@ -104,10 +156,18 @@ function Main() {
         </div>
       </section>
       {/* <!-- fin api NASA --> */}
-      <section className="gallery"></section>
-      /* popup && (...) es un truco de JavaScript que se llama "evaluación de
-      cortocircuito". Significa: "si popup tiene algún valor (no es null),
-      entonces evalúa y renderiza lo que sigue. Si es null, no hagas nada". */
+      {/* a la galeria de fotos se le cambio el section por ul ya que la tarjeta
+      esta creada con li y todo li debe estar dentro de un ul u ol 
+      <section className="gallery"></section> */}
+      <ul className="gallery">
+        {cards.map((card) => (
+          <Card key={card._id} card={card} />
+        ))}
+      </ul>
+      {/* popup && (...) es un truco de JavaScript que se llama "evaluación de
+      cortocircuito". Significa: "si popup ( el estado del useState ) tiene
+      algún valor (no es null), entonces evalúa y renderiza lo que sigue. Si es
+      null, no hagas nada". */}
       {popup && (
         <Popup onClose={handleClosePopup} title={popup.title}>
           {popup.children}

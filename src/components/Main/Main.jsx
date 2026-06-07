@@ -1,15 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import avatar from "../../images/Avatar.png";
 import editIcon from "../../images/editar.png";
 import addIcon from "../../images/add-image.png";
-
-import lagodi from "../../images/lagodi.png";
-import valledeyosemite from "../../images/valledeyosemite.jpg";
-import latemar from "../../images/latemar.png";
-import vanois from "../../images/vanois.png";
-import lagolouise from "../../images/lagolouise.jpg";
-import montanascalvas from "../../images/montanascalvas.png";
 
 /* Importo los tres forms que voy a meter al popup */
 import EditAvatar from "./components/form/EditAvatar/EditAvatar";
@@ -21,52 +14,26 @@ import Card from "./components/Card/Card";
 
 /* Importo el Popup generico */
 import Popup from "./components/Popup/Popup";
-
-/* el array de Cards */
-const cards = [
-  {
-    isLiked: false,
-    _id: "card-001",
-    name: "Lago di",
-    link: lagodi,
-  },
-  {
-    isLiked: false,
-    _id: "card-002",
-    name: "Valle de Yosemite",
-    link: valledeyosemite,
-  },
-  {
-    isLiked: false,
-    _id: "card-003",
-    name: "Latemar",
-    link: latemar,
-  },
-  {
-    isLiked: false,
-    _id: "card-004",
-    name: "Vanoise",
-    link: vanois,
-  },
-  {
-    isLiked: false,
-    _id: "card-005",
-    name: "Lago Louise",
-    link: lagolouise,
-  },
-  {
-    isLiked: false,
-    _id: "card-006",
-    name: "Montañas Calvas",
-    link: montanascalvas,
-  },
-];
-
-console.log(cards);
+import api from "../../utils/api";
+/*importo el contexto del usuario */
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Main() {
   /* creo el useState que usare para los dar el estado a la funcion que manipula el estado de los popups */
   const [popup, setPopup] = useState(null);
+
+  /* creo el useState para el estado de las cards */
+  const [cards, setCards] = useState([]);
+
+  /* useEfect para pedir los datos a la api*/
+  useEffect(() => {
+    api.getCardList().then((datos) => {
+      setCards(datos);
+    });
+  }, []);
+
+  /* agarro el dato del canal directo ( del contexto )*/
+  const currentUser = useContext(CurrentUserContext);
 
   /* los tres objetos que tendran los datos del formularion que mandaremos al popup y su titulo */
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
@@ -98,7 +65,7 @@ function Main() {
           onClick={() => handleOpenPopup(editAvatarPopup)}
         >
           <img
-            src={avatar}
+            src={currentUser.avatar}
             alt="Avatar de Cousteau"
             className="profile__avatar"
           />
@@ -107,8 +74,8 @@ function Main() {
 
         <div className="profile__id">
           <div className="profile__id-textos">
-            <p className="profile__name"></p>
-            <p className="profile__degree"></p>
+            <p className="profile__name">{currentUser.name}</p>
+            <p className="profile__degree">{currentUser.about}</p>
           </div>
 
           <button

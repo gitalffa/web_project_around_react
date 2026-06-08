@@ -32,6 +32,34 @@ function Main() {
     });
   }, []);
 
+  /* funcion para modificar el like de la card */
+  async function handleCardLike(card) {
+    const isLiked = card.isLiked;
+    await api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard,
+          ),
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  /** funcion para eliminar una card */
+
+  async function handleCardDelete(card) {
+    await api
+      .deleteCard(card._id)
+      .then((deletedCard) => {
+        setCards((state) =>
+          state.filter((currentCard) => currentCard._id !== card._id),
+        );
+      })
+      .catch((error) => console.log(error));
+  }
+
   /* agarro el dato del canal directo ( del contexto )*/
   const currentUser = useContext(CurrentUserContext);
 
@@ -128,7 +156,13 @@ function Main() {
       <section className="gallery"></section> */}
       <ul className="gallery">
         {cards.map((card) => (
-          <Card key={card._id} card={card} handleOpenPopup={handleOpenPopup} />
+          <Card
+            key={card._id}
+            card={card}
+            handleOpenPopup={handleOpenPopup}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+          />
         ))}
       </ul>
       {/* popup && (...) es un truco de JavaScript que se llama "evaluación de

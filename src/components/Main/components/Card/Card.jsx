@@ -1,11 +1,23 @@
 import ImagePopup from "../ImagePopup/ImagePopup";
 export default function Card(props) {
   const { name, link, isLiked } = props.card;
-  const { handleOpenPopup } = props;
+  const { handleOpenPopup, onCardLike, onCardDelete } = props;
   const imageComponent = {
     title: null,
     children: <ImagePopup card={props.card} />,
   };
+
+  const cardLikeButtonClassName = `card__like-button ${
+    isLiked ? "card__like-button_is-active" : ""
+  }`;
+
+  function handleLikeClick() {
+    onCardLike(props.card);
+  }
+
+  function handleDeleteClick() {
+    onCardDelete(props.card);
+  }
 
   return (
     <li className="card">
@@ -19,14 +31,20 @@ export default function Card(props) {
         aria-label="Delete card"
         className="card__delete-button"
         type="button"
-      />
+        onClick={handleDeleteClick}
+      >
+        🗑️
+      </button>
       <div className="card__description">
         <h2 className="card__title">{name}</h2>
         <button
           aria-label="Like card"
           type="button"
-          className="card__like-button"
-        />
+          className={cardLikeButtonClassName}
+          onClick={() => handleLikeClick()}
+        >
+          ♥
+        </button>
       </div>
     </li>
   );

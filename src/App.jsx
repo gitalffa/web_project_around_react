@@ -9,6 +9,15 @@ import { useEffect, useState } from "react";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
 
+  const handleUpdateUser = async (data) => {
+    await api
+      .setUserInfo(data)
+      .then((newData) => {
+        setCurrentUser(newData);
+      })
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     api.getUserInfo().then((datos) => {
       setCurrentUser(datos);
@@ -16,7 +25,7 @@ function App() {
   }, []);
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
       <div className="page">
         <Header />
         <Main />

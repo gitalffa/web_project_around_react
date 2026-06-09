@@ -61,7 +61,7 @@ function Main() {
   }
 
   /* agarro el dato del canal directo ( del contexto )*/
-  const currentUser = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   /* los tres objetos que tendran los datos del formularion que mandaremos al popup y su titulo */
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };

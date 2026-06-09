@@ -1,10 +1,31 @@
+import { useState, useContext } from "react";
+import CurrentUserContext from "../../../../../contexts/CurrentUserContext";
+
 export default function EditProfile() {
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const [name, setName] = useState(currentUser.name);
+  const [description, setDescription] = useState(currentUser.about);
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleUpdateUser({ name, about: description });
+  };
+
   return (
     <form
       className="popup__form"
       name="profile-form"
       id="edit-profile-form"
       noValidate
+      onSubmit={handleSubmit}
     >
       <label className="popup__field">
         <input
@@ -16,6 +37,8 @@ export default function EditProfile() {
           placeholder="Nombre"
           required
           type="text"
+          value={name}
+          onChange={handleNameChange}
         />
         <span className="popup__error" id="profile-name-error"></span>
       </label>
@@ -29,6 +52,8 @@ export default function EditProfile() {
           placeholder="Acerca de mí"
           required
           type="text"
+          value={description}
+          onChange={handleDescriptionChange}
         />
         <span className="popup__error" id="profile-degree-error"></span>
       </label>

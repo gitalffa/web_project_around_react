@@ -18,10 +18,7 @@ import api from "../../utils/api";
 /*importo el contexto del usuario */
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Main() {
-  /* creo el useState que usare para los dar el estado a la funcion que manipula el estado de los popups */
-  const [popup, setPopup] = useState(null);
-
+function Main({ popup, onOpenPopup, onClosePopup }) {
   /* creo el useState para el estado de las cards */
   const [cards, setCards] = useState([]);
 
@@ -71,18 +68,6 @@ function Main() {
   };
   const editAvatarPopup = { title: "Cambiar avatar", children: <EditAvatar /> };
 
-  /* funcion que abre el popup que pasamos por parametro */
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
-
-  /* funcion que cierra cualquier popup ya que el popup us generico va a cerrar cualquierra que este abierto */
-  /* es decir estamos usando el mismo popup para todos los forms entonces con importa cual este abierto siempre lo cierra */
-
-  function handleClosePopup() {
-    setPopup(null);
-  }
-
   return (
     <main className="content">
       <section className="profile">
@@ -90,7 +75,7 @@ function Main() {
           className="profile__avatar-button"
           type="button"
           aria-label="Editar avatar"
-          onClick={() => handleOpenPopup(editAvatarPopup)}
+          onClick={() => onOpenPopup(editAvatarPopup)}
         >
           <img
             src={currentUser.avatar}
@@ -110,7 +95,7 @@ function Main() {
             className="profile__button profile-button-edit"
             type="button"
             /* usamos la funcion flecha porque al ser funcion espera que la mandes ejecutas para asi ejecutar el handler, de lo contrario el handler se ejecuta cuando abres la pagina */
-            onClick={() => handleOpenPopup(editProfilePopup)}
+            onClick={() => onOpenPopup(editProfilePopup)}
           >
             <img src={editIcon} alt="button edit" />
           </button>
@@ -118,7 +103,7 @@ function Main() {
         <button
           className="profile__button profile-button-add"
           type="button"
-          onClick={() => handleOpenPopup(newCardPopup)}
+          onClick={() => onOpenPopup(newCardPopup)}
         >
           <img src={addIcon} alt="button add" />
         </button>
@@ -159,7 +144,7 @@ function Main() {
           <Card
             key={card._id}
             card={card}
-            handleOpenPopup={handleOpenPopup}
+            handleOpenPopup={onOpenPopup}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
           />
@@ -170,7 +155,7 @@ function Main() {
       algún valor (no es null), entonces evalúa y renderiza lo que sigue. Si es
       null, no hagas nada". */}
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup onClose={onClosePopup} title={popup.title}>
           {popup.children}
         </Popup>
       )}

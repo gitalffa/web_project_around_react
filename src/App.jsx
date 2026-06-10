@@ -33,6 +33,16 @@ function App() {
       .catch((error) => console.error(error));
   };
 
+  const handleUpdateAvatar = async (data) => {
+    await api
+      .setUserAvatar(data)
+      .then((newData) => {
+        setCurrentUser(newData);
+        handleClosePopup();
+      })
+      .catch((error) => console.error(error));
+  };
+
   useEffect(() => {
     api.getUserInfo().then((datos) => {
       setCurrentUser(datos);
@@ -40,7 +50,9 @@ function App() {
   }, []);
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
+    <CurrentUserContext.Provider
+      value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
+    >
       <div className="page">
         <Header />
         <Main

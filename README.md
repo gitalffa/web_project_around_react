@@ -29,13 +29,14 @@ Este proyecto es la migración a **React** del proyecto original en JavaScript "
 
 ```
 src/
-├── App.jsx                      # Componente raíz: estado de usuario, tarjetas y popups
 ├── main.jsx                     # Punto de entrada
 ├── contexts/
 │   └── CurrentUserContext.js    # Contexto del usuario actual
 ├── utils/
 │   └── api.js                   # Clase Api e instancia configurada
 ├── components/
+│   ├── App/
+│   │   └── App.jsx              # Componente raíz: estado de usuario, tarjetas y popups
 │   ├── Header/
 │   ├── Footer/
 │   └── Main/
